@@ -3,43 +3,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	//post 방식 전송했을때 한글 깨지지 않도록
 	request.setCharacterEncoding("utf-8");
-
-	GuestDto dto = new GuestDto();
-
+	
+	//1. 폼 전송되는 수정할 회원의 정보를 읽어온다.
 	int num=Integer.parseInt(request.getParameter("num"));
 	String writer=request.getParameter("writer");
 	String content=request.getParameter("content");
 	String pwd=request.getParameter("pwd");
-	
-	dto.setNum(num);
-	dto.setWriter(writer);
-	dto.setContent(content);
-	dto.setPwd(pwd);
-	
+	GuestDto dto=new GuestDto(num, writer, content, pwd, null);
+	//2. DB 에 수정 반영한다
 	boolean isSuccess=GuestDao.getInstance().update(dto);
-%>
+	//3. 응답하기 
+%>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>/guest/update.jsp</title>
 </head>
 <body>
-	<div class="container">
-		<h1>알림</h1>
-		<%if(isSuccess){ %>
-			<p>
-				<strong><%=num %></strong> 번 방문객의 정보를 수정했습니다.
-				<a href="list.jsp">목록보기</a>
-			</p>
-		<%}else{ %>
-			<p>
-				수정실패!
-				<a href="updateform.jsp?num=<%=num %>">다시 수정</a>
-			</p>
-		<%} %>
-	</div>
+	<h1>알림</h1>
+	<%if(isSuccess){ %>
+		<p>
+			<strong><%=writer %></strong> 님이 작성한 글이 수정되었습니다.
+			<a href="list.jsp">목록보기</a>
+		</p>
+	<%}else{ %>
+		<p>
+			수정 실패!
+			<a href="updateform.jsp?num=<%=num%>">다시 작성</a>
+		</p>
+	<%} %>
 </body>
 </html>
