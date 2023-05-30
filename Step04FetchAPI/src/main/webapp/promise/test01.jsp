@@ -8,7 +8,7 @@
 <title>promise/test01.jsp</title>
 </head>
 <body>
-	<h3>롤백 지옥이란 무엇인가?</h3>
+	<h3>콜백 지옥이란 무엇인가?</h3>
 	<script>
 		//가상의 주어진 작업을 처리 하는 함수 (주어진 작업을 처리하는데 random 한 시간이 걸린다고 가정하자)
 		function work(job, callback){
